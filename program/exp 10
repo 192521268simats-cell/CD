@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char gram[50];
+    char part1[50], part2[50];
+    char modifiedGram[50], newGram[50];
+
+    int i, j = 0, k = 0;
+    int pos = 0;
+
+    // Input production
+    printf("Enter Production: S->");
+    gets(gram);
+
+    // Extract part1
+    for (i = 0; gram[i] != '|' && gram[i] != '\0'; i++, j++)
+    {
+        part1[j] = gram[i];
+    }
+    part1[j] = '\0';
+
+    // Extract part2
+    for (j = ++i, i = 0; gram[j] != '\0'; j++, i++)
+    {
+        part2[i] = gram[j];
+    }
+    part2[i] = '\0';
+
+    // Find common prefix
+    for (i = 0; part1[i] == part2[i] && part1[i] != '\0'; i++)
+    {
+        modifiedGram[k++] = part1[i];
+    }
+
+    pos = i;
+
+    // Add new non-terminal
+    modifiedGram[k++] = 'X';
+    modifiedGram[k] = '\0';
+
+    // Create new production
+    j = 0;
+
+    for (i = pos; part1[i] != '\0'; i++, j++)
+    {
+        newGram[j] = part1[i];
+    }
+
+    newGram[j++] = '|';
+
+    for (i = pos; part2[i] != '\0'; i++, j++)
+    {
+        newGram[j] = part2[i];
+    }
+
+    newGram[j] = '\0';
+
+    // Print the result
+    printf("\nS->%s", modifiedGram);
+    printf("\nX->%s\n", newGram);
+
+    return 0;
+}
